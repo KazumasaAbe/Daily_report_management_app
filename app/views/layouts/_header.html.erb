@@ -1,31 +1,64 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "Daily_management_app", '#', id: "logo" %>
+    <%= link_to "Daily_management_app", root_path, id: "logo" %>
 
-      <nav>
+    <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Top", root_path %></li>
 
-
         <% if logged_in? %>
-          <li><%= link_to "Users", '#' %></li>
+        <% if current_user.admin? %>
+        <li><%= link_to "メンバー追加",signup_path %></li>
+        <li><%= link_to "提出日報一覧",attendances_receipts_list_user_path(current_user) %></li>
+        <% end %>
+        <% unless current_user.admin? %>
+        <li><%= link_to "日報一覧",attendances_reception_index_user_path(current_user) %></li>
+        <li><%= link_to "日報提出",attendances_reception_request_user_path(current_user, data: @attendance) %></li>
+        <% end %>
 
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Account <b class="caret"></b>
-            </a>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            受付一覧
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "加工受付", processing_path %></li>
+            <li><%= link_to "電気受付", electricity_path %></li>
+            <li><%= link_to "組立受付", assembly_path %></li>
+            <li><%= link_to "全ての受付", receptions_path %></li>
+          </ul>
+        </li>
 
-                  <ul class="dropdown-menu">
-                    <li><%= link_to "Show", current_user %></li>
-                    <li><%= link_to "Settings", edit_user_path(current_user) %></li>
-                    <li class="divider"></li>
-                    <li>
-                      <%= link_to "Log out", logout_path, method: :delete %>
-                    </li>
-                  </ul>
-          </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            メンバー一覧 <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% unless current_user.admin? %>
+            <li><%= link_to "チームメンバー一覧", users_path %></li>
+            <% end %>
+            <li><%= link_to "全メンバー一覧", all_index_path %></li>
+          </ul>
+        </li>
+
+
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= current_user.name %> <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% unless current_user.admin? %>
+            <li><%= link_to "設定", edit_user_path(current_user) %></li>
+            <% end %>
+            <li class="divider"></li>
+            <li>
+              <%= link_to "Log out", logout_path, method: :delete %>
+            </li>
+          </ul>
+        </li>
+
         <% else %>
-          <li><%= link_to "Log in", login_path %></li>
+        <li><%= link_to "Log in", login_path %></li>
         <% end %>
 
 

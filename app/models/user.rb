@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :attendances, dependent: :destroy
+  
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
 
@@ -11,6 +13,14 @@ class User < ApplicationRecord
 
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  validates :name_code, presence: true
+  validates :position, presence: true
+  validates :department, presence: true
+  validates :specialty, presence: true
+
+  mount_uploader :image, ImageUploader
+  
 
 
   def User.digest(string)

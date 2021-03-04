@@ -1,0 +1,155 @@
+<% provide(:title, "all_reception") %>
+<h1>受付日報一覧</h1>
+
+<%= form_with(model: @user, url: receipts_receipts_update_user_attendance_path(@user, @attendance), 
+              local: true, method: :patch) do |f| %>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+
+    <% if current_user.admin? %>
+    <%= link_to "新規作成", new_reception_path, class: "btn btn-primary", remote: true %>
+    <% else %>
+    <%= f.submit "反映", class: "btn btn-primary" %>
+    <% end %>
+    <div style="margin-bottom: 20px;"></div>
+
+    <% if @processings.present? %>
+    <div class="processings">【加工業務受付】</div>
+    <% elsif @electricitys.present? %>
+    <div class="processings">【電気業務受付】</div>
+    <% elsif @assemblys.present? %>
+    <div class="processings">【組立業務受付】</div>
+    <% end %>
+
+    <table class="table table-bordered table-striped table-condensed table-hover" id="table-receptions">
+      <thead>
+        <tr>
+          <th>受付No</th>
+          <th>受付名</th>
+          <th>規定工数 [h]</th>
+          <th>使用可能工数 [h]</th>
+          <th>実績工数 [min]</th>
+          <% unless current_user.admin? %>
+          <th>反映</th>
+          <% else %>
+          <th>編集</th>
+          <% end %>
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+        <% if @processings.present? %>
+        <% @processings.each do |processing| %>
+        <%= f.fields_for "receipts[]", processing  do |r| %>
+        <%= f.fields_for "receptions[]", processing do |p| %>
+
+        <tr>
+
+          <td><%= processing.reception_namuber %></td>
+          <%= r.hidden_field :receipt_namuber, value: processing.reception_namuber %>
+
+          <td><%= processing.reception_name %></td>
+          <%= r.hidden_field :receipt_name, value: processing.reception_name %>
+
+          <td><%= processing.reception_time %></td>
+          <td><%= processing.reception_remainder_time %></td>
+          <td><%= processing.reception_Performance_time %></td>
+          <% unless current_user.admin? %>
+          <td><%= p.check_box :check %></td>
+          <%= p.hidden_field :check_id, value: processing.id %>
+          <% else %>
+          <td>
+            <%= link_to "編集", edit_reception_path(processing), class: "btn btn-primary btn-sm", remote: true %>
+            <%= link_to "削除", reception_path(processing), method: :delete,
+                                  data: { confirm: "削除してよろしいですか？" },
+                                  class: "btn btn-danger btn-sm" %>
+          </td>
+          <% end %>
+          <%= r.hidden_field :receipt_specialty, value: "加工" %>
+        </tr>
+        <% end %>
+        <% end %>
+        <% end %>
+        <% end %>
+    </table>
+
+    <% if @electricitys.present? %>
+    <div class="processings">【電気業務受付】</div>
+    <table class="table table-bordered table-striped table-condensed table-hover" id="table-receptions">
+      <% @electricitys.each do |electricity| %>
+      <%= f.fields_for "receipts[]", electricity do |r| %>
+      <%= f.fields_for "receptions[]", electricity do |e| %>
+      <tr>
+        <td><%= electricity.reception_namuber %></td>
+        <%= r.hidden_field :receipt_namuber, value: electricity.reception_namuber %>
+
+        <td><%= electricity.reception_name %></td>
+        <%= r.hidden_field :receipt_name, value: electricity.reception_name %>
+
+        <td><%= electricity.reception_time %></td>
+        <td><%= electricity.reception_remainder_time %></td>
+        <td><%= electricity.reception_Performance_time %></td>
+        <% unless current_user.admin? %>
+        <td><%= e.check_box :check %></td>
+        <%= e.hidden_field :check_id, value: electricity.id %>
+        <% else %>
+        <td>
+          <%= link_to "編集", edit_reception_path(electricity), class: "btn btn-primary btn-sm", remote: true %>
+          <%= link_to "削除", reception_path(electricity), method: :delete,
+                                  data: { confirm: "削除してよろしいですか？" },
+                                  class: "btn btn-danger btn-sm" %>
+        </td>
+        <% end %>
+        <%= r.hidden_field :receipt_specialty, value: "電気" %>
+      </tr>
+      <% end %>
+      <% end %>
+      <% end %>
+      <% end %>
+    </table>
+
+    <% if @assemblys.present? %>
+    <div class="processings">【組立業務受付】</div>
+    <table class="table table-bordered table-striped table-condensed table-hover" id="table-receptions">
+      <% @assemblys.each do |assembly| %>
+      <%= f.fields_for "receipts[]", assembly do |r| %>
+      <%= f.fields_for "receptions[]", assembly do |a| %>
+      <tr>
+        <td><%= assembly.reception_namuber %></td>
+        <%= r.hidden_field :receipt_namuber, value: assembly.reception_namuber %>
+
+        <td><%= assembly.reception_name %></td>
+        <%= r.hidden_field :receipt_name, value: assembly.reception_name %>
+
+        <td><%= assembly.reception_time %></td>
+        <td><%= assembly.reception_remainder_time %></td>
+        <td><%= assembly.reception_Performance_time %></td>
+        <% unless current_user.admin? %>
+        <td><%= a.check_box :check %></td>
+        <%= a.hidden_field :check_id, value: assembly.id %>
+        <% else %>
+        <td>
+          <%= link_to "編集", edit_reception_path(assembly), class: "btn btn-primary btn-sm", remote: true %>
+          <%= link_to "削除", reception_path(assembly), method: :delete,
+                                  data: { confirm: "削除してよろしいですか？" },
+                                  class: "btn btn-danger btn-sm" %>
+        </td>
+        <% end %>
+        <%= r.hidden_field :receipt_specialty, value: "組立" %>
+      </tr>
+      <% end %>
+      <% end %>
+      <% end %>
+      <% end %>
+    </table>
+
+    </tbody>
+  </div>
+</div>
+
+<% end %>
+<!--モーダルウインドウ表示-->
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

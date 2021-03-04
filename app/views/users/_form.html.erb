@@ -1,27 +1,36 @@
-
 <%= form_with(model: @user, local: true) do |f| %>
-      
-  <%= f.label :name, class: "label-#{yield(:class_text)}" %>
-  <%= f.text_field :name, class: "form-control"  %>
 
-  <%= f.label :email, class: "label-#{yield(:class_text)}" %>
-  <%= f.email_field :email, class: "form-control" %>
-  <!--
-  <%= f.label :position, class: "label-#{yield(:class_text)}" %>
-  <%= f.select :name,['','メンバー','チームリーダー','グループリーダー'],{}, class: "form-control-select" %>
+<%= f.label :name, class: "label-#{yield(:class_text)}" %>
+<%= f.text_field :name, class: "form-control"  %>
 
-  <%= f.label :belongs, class: "label-#{yield(:class_text)}" %>
-  <%= f.select :name,['','試作部'],{}, class: "form-control-select" %>
+<%= f.label :email, class: "label-#{yield(:class_text)}" %>
+<%= f.email_field :email, class: "form-control" %>
 
-  <%= f.label :specialty, class: "label-#{yield(:class_text)}" %>
-  <%= f.select :name,['','組立','加工','電気'],{}, class: "form-control-select" %>
-  -->
-  <%= f.label :password, class: "label-#{yield(:class_text)}" %>
-  <%= f.password_field :password, class: "form-control" %>
+<div class="row">
+  <div class="col-md-5">
 
-  <%= f.label :password_confirmation, class: "label-#{yield(:class_text)}" %>
-  <%= f.password_field :password, class: "form-control" %>
+    <%= f.label :name_code, class: "label-#{yield(:class_text)}" %>
+    <%= f.number_field :name_code, min: 1, class: "form-control" %>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>      
+    <%= f.label :position, class: "label-#{yield(:class_text)}" %>
+    <%= f.select :position,['','メンバー','チームリーダー'],{}, class: "form-control" %>
+
+    <%= f.label :department, class: "label-#{yield(:class_text)}" %>
+    <%= f.select :department,['','試作部'],{}, class: "form-control" %>
+
+    <%= f.label :specialty, class: "label-#{yield(:class_text)}" %>
+    <%= f.select :specialty,['','組立','加工','電気'],{}, class: "form-control" %>
+  </div>
+</div>
+
+
+
+<%= f.label :password, class: "label-#{yield(:class_text)}" %>
+<%= f.password_field :password, class: "form-control" %>
+
+<%= f.label :password_confirmation, class: "label-#{yield(:class_text)}" %>
+<%= f.password_field :password, class: "form-control" %>
+
+<%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
 
 <% end %>

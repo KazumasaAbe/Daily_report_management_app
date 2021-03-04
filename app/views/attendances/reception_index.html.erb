@@ -1,0 +1,30 @@
+<% provide(:title, "日報一覧") %>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>個人日報 実績カレンダー</h2>
+
+    <%= month_calendar do |date| %>
+    <%= date.day %>
+    <% @attendances.each do |day| %>
+
+    <% if date == day.worked_on && day.classification.present? && (day.working_time == day.designation_time) %>
+    <br>
+    <%= link_to "確認", attendances_reception_day_user_path(@user, date: day.worked_on), class: "btn btn-sm btn-primary btn-reception", remote: true %>
+    <% end %>
+
+    <% if date == day.worked_on && day.classification.nil? && current_user.admin? %>
+    <br>
+    <%= link_to "新規", admin_reception_request_user_attendance_path(@user, day, date: day.worked_on), class: "btn btn-sm btn-info btn-reception" %>
+    <% end %>
+
+
+    <% end %>
+    <% end %>
+
+  </div>
+</div>
+
+
+
+<div id="reception_day" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

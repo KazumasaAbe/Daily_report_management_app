@@ -1,0 +1,56 @@
+<% provide(:title, "edit") %>
+<% provide(:class_text, "edit") %>
+<% provide(:button_text, "更新") %>
+
+<div class="modal-dialog modal-dialog-center">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+<div class="row">
+  <div class="col-md-12">
+
+<%= form_with(model: @user, local: true) do |f| %>
+
+  <% if @user.image.present? %>
+
+      <%= image_tag @user.image.url %>
+
+  <% end %>
+     
+  <br>
+  <%= f.label :name, class: "label-#{yield(:class_text)}" %>
+  <%= f.text_field :name, readonly: true, class: "form-control"  %>
+
+  <%= f.label :email, class: "label-#{yield(:class_text)}" %>
+  <%= f.email_field :email, readonly: true, class: "form-control" %>
+
+  <div class="row">
+    <div class="col-md-5">
+
+      <%= f.label :name_code, class: "label-#{yield(:class_text)}" %>
+      <%= f.number_field :name_code, readonly: true, min: 1, class: "form-control" %>
+      
+      <%= f.label :position, class: "label-#{yield(:class_text)}" %>
+      <%= f.select :position,['','メンバー','チームリーダー','グループリーダー'],{}, disabled: true, class: "form-control" %>
+
+      <%= f.label :department, class: "label-#{yield(:class_text)}" %>
+      <%= f.select :department, ['','試作部'],{}, disabled: true, class: "form-control" %>
+
+      <%= f.label :specialty, class: "label-#{yield(:class_text)}" %>
+      <%= f.select :specialty, ['','組立','加工','電気'],{}, disabled: true, class: "form-control" %>
+
+     
+    </div>
+  </div>
+
+<% end %>
+
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+
+<%= form_with(model: @reception, local: true) do |f| %>
+      
+  <%= f.label :reception_namuber, class: "label-#{yield(:class_text)}" %>
+  <%= f.number_field :reception_namuber, min: 1, class: "form-control"  %>
+
+  <%= f.label :reception_name, class: "label-#{yield(:class_text)}" %>
+  <%= f.text_field :reception_name, class: "form-control" %>
+
+  <%= f.label :reception_time, "規定工数(min)", class: "label-#{yield(:class_text)}" %>
+  <%= f.number_field :reception_time, min: 1, class: "form-control" %>
+      
+  <%= f.label :reception_specialty, class: "label-#{yield(:class_text)}" %>
+  <%= f.select :reception_specialty,['','加工','電気','組立'],{}, class: "form-control" %>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>      
+
+<% end %>

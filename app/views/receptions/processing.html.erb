@@ -1,0 +1,38 @@
+<% provide(:title, "加工受付一覧") %>
+
+<h1>加工受付一覧</h1>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+<div class="row-processing">
+
+  <table class="table table-bordered table-striped table-condensed table-hover" id="table-receptions">
+      <thead>
+      <tr>
+        <th>受付No</th>
+        <th>受付名</th>
+        <th>規定工数</th>
+        <th>使用可能工数</th>
+        <th>実績工数</th>
+      </tr>
+
+      </thead>
+
+      <tbody>
+        <% if @processings.present? %>
+          <% @processings.each do |processing| %>
+            <tr>
+              <td><%= processing.reception_namuber %></td>
+              <td><%= processing.reception_name %></td>
+              <td><%= processing.reception_time %></td>
+              <td></td>
+              <td></td>
+            </tr>
+          <% end %>
+         <% end %>
+         </table>
+         </div>
+         </div>
+         </div>
+        
+         
+         

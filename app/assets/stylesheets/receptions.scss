@@ -1,0 +1,55 @@
+#table-receptions {
+  th {
+    vertical-align: middle;
+    text-align: center;
+    width: 10%;
+    background-color: #aad4e2;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+    width: 10%;
+    background-color: #f1f4f5;
+  }
+}
+
+#table-processing {
+  margin-left: 30px;
+  th {
+    vertical-align: middle;
+    text-align: center;
+    width: 10%;
+    background-color: #aad4e2;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+    width: 10%;
+    background-color: #f1f4f5;
+  }
+}
+
+.row-processing {
+  display: flex;
+}
+
+.processings {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.btn-edit {
+  margin-top: 10px;
+}
+
+.btn-new {
+  margin-top: 10px;
+}
+
+.label-new {
+  margin-top: 5px;
+}
+
+.label-edit {
+  margin-top: 5px;
+}

@@ -7,7 +7,24 @@ ja:
           id: ID
           name: 名前
           email: メールアドレス
+          image: ユーザー画像
           password: パスワード
           password_confirmation: パスワード再入力
           created_at: 作成日
           updated_at: 更新日
+          team_superior: チーム上長
+          group_superior: グループ上長
+          name_code: 氏名コード
+          position: 役職
+          department: 所属
+          specialty: 専門
+
+        reception:
+          reception_namuber: 受付No.
+          reception_name: 受付名
+          reception_time: 規定工数
+          reception_remainder_time: 使用可能工数
+          reception_Performance_time: 実績工数
+          reception_specialty: 受付種別
+
+

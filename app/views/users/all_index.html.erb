@@ -1,0 +1,204 @@
+<% provide(:title, "全メンバー一覧") %>
+<h1>全メンバー一覧</h1>
+
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="position">【グループリーダー】</div>
+    <table class="table table-bordered table-striped table-condensed table-hover" id="table-users">
+      <thead>
+        <tr>
+          <th>氏名コード</th>
+          <th>名前</th>
+          <th>所属</th>
+          <th>専門</th>
+          <th>チームリーダー</th>
+          <th>個人情報</th>
+
+          <% if current_user.admin? %>
+          <th>日報編集</th>
+          <th>削除</th>
+          <% end %>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+        <% @users.each do |user| %>
+        <% if user.group_superior? %>
+        <tr>
+          <td><%= user.name_code %></td>
+          <td><%= user.name %></td>
+          <td><%= user.department %></td>
+          <td><%= user.specialty %></td>
+          <td>-</td>
+          <td>
+            <%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm", remote: true %>
+          </td>
+
+          <% if current_user.admin? %>
+          <td></td>
+          <td><%= link_to "削除", '#', class: "btn btn-danger btn-sm" %></td>
+          <% end %>
+
+        </tr>
+        <% end %>
+        <% end %>
+      </tbody>
+
+
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="position">【チームリーダー】</div>
+    <table class="table table-bordered table-striped table-condensed table-hover" id="table-users">
+      <thead>
+
+
+      </thead>
+
+      <tbody>
+        <% @users.each do |user| %>
+        <% if user.team_superior? %>
+        <tr>
+          <td><%= user.name_code %></td>
+          <td><%= user.name %></td>
+          <td><%= user.department %></td>
+          <td><%= user.specialty %></td>
+          <td><%= user.name %></td>
+          <td>
+            <%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm", remote: true %>
+          </td>
+
+          <% if current_user.admin? %>
+          <td><%= link_to "日報編集", attendances_reception_index_user_path(user), class: "btn btn-primary btn-sm" %></td>
+          <td><%= link_to "削除", '#', class: "btn btn-danger btn-sm" %></td>
+          <% end %>
+
+        </tr>
+        <% end %>
+        <% end %>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="position">【メンバー】</div>
+    <table class="table table-bordered table-striped table-condensed table-hover" id="table-users">
+      <thead>
+
+      </thead>
+
+      <tbody>
+        <% @users.each do |user| %>
+        <% if user.specialty == "加工" %>
+        <% if user.group_superior == false &&
+            user.team_superior == false &&
+            user.admin == false %>
+        <tr>
+          <td><%= user.name_code %></td>
+          <td><%= user.name %></td>
+          <td><%= user.department %></td>
+          <td><%= user.specialty %></td>
+          <td>
+            <% if user.specialty == "加工" %>
+            <% @users_t.each do |t| %>
+            <% if t.specialty == "加工" %>
+            <%= t.name %><br>
+            <% end %>
+            <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm", remote: true %>
+          </td>
+
+          <% if current_user.admin? %>
+          <td><%= link_to "日報編集", attendances_reception_index_user_path(user), class: "btn btn-primary btn-sm" %></td>
+          <td><%= link_to "削除", '#', class: "btn btn-danger btn-sm" %></td>
+          <% end %>
+
+        </tr>
+        <% end %>
+        <% end %>
+        <% end %>
+
+        <% @users.each do |user| %>
+        <% if user.specialty == "電気" %>
+        <% if user.group_superior == false &&
+            user.team_superior == false &&
+            user.admin == false %>
+        <tr>
+          <td><%= user.name_code %></td>
+          <td><%= user.name %></td>
+          <td><%= user.department %></td>
+          <td><%= user.specialty %></td>
+          <td>
+            <% if user.specialty == "電気" %>
+            <% @users_t.each do |t| %>
+            <% if t.specialty == "電気" %>
+            <%= t.name %><br>
+            <% end %>
+            <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm", remote: true %>
+          </td>
+
+          <% if current_user.admin? %>
+          <td><%= link_to "日報編集", attendances_reception_index_user_path(user), class: "btn btn-primary btn-sm" %></td>
+          <td><%= link_to "削除", '#', class: "btn btn-danger btn-sm" %></td>
+          <% end %>
+
+        </tr>
+        <% end %>
+        <% end %>
+        <% end %>
+
+        <% @users.each do |user| %>
+        <% if user.specialty == "組立" %>
+        <% if user.group_superior == false &&
+            user.team_superior == false &&
+            user.admin == false %>
+        <tr>
+          <td><%= user.name_code %></td>
+          <td><%= user.name %></td>
+          <td><%= user.department %></td>
+          <td><%= user.specialty %></td>
+          <td>
+            <% if user.specialty == "組立" %>
+            <% @users_t.each do |t| %>
+            <% if t.specialty == "組立" %>
+            <%= t.name %><br>
+            <% end %>
+            <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm", remote: true %>
+          </td>
+
+          <% if current_user.admin? %>
+          <td><%= link_to "日報編集", attendances_reception_index_user_path(user), class: "btn btn-primary btn-sm" %></td>
+          <td><%= link_to "削除", '#', class: "btn btn-danger btn-sm" %></td>
+          <% end %>
+
+        </tr>
+        <% end %>
+        <% end %>
+        <% end %>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+<div id="information" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
