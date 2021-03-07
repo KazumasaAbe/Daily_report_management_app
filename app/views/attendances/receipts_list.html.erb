@@ -2,29 +2,23 @@
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-  <h2>日報確認</h2>
+    <h2>日報確認</h2>
 
-<%= month_calendar do |date| %>
-  <%= date.day %>
+    <%= month_calendar do |date| %>
+    <%= date.day %>
     <% @attendances.each do |a| %>
 
-      <% if date == a.worked_on && a.classification.present? %>
-        <br>
-          <%= link_to "確認", attendances_receipts_day_list_user_path(current_user, date: a.worked_on), class: "btn btn-sm btn-primary" %>
+    <% if date == a.worked_on && a.classification.present? %>
+    <br>
+    <%= link_to "確認", attendances_receipts_day_list_user_path(current_user, date: a.worked_on), class: "btn btn-sm btn-primary" %>
     <% break %>
-      <% end %>
-
-      <% if date == a.worked_on && a.classification.nil? %>
-        <br>
-          <%= link_to "確認", '#', disabled: true, class: "btn btn-sm btn-info" %>
-    <% break %>
-      <% end %>
+    <% end %>
 
 
-      
-  <% end %>
-<% end %>
+
+    <% end %>
+    <% end %>
 
 
-</div>
+  </div>
 </div>

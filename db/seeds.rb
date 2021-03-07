@@ -122,7 +122,7 @@ end
   Reception.create!(reception_namuber: reception_namuber,
       reception_name: reception_name,
       reception_specialty: "加工",
-      reception_time: "100")
+      reception_time: "600")
   end
 
    #電気受付生成
@@ -132,7 +132,7 @@ end
   Reception.create!(reception_namuber: reception_namuber,
       reception_name: reception_name,
       reception_specialty: "電気",
-      reception_time: "120")
+      reception_time: "800")
   end
 
    #組立受付生成
@@ -142,5 +142,5 @@ end
   Reception.create!(reception_namuber: reception_namuber,
       reception_name: reception_name,
       reception_specialty: "組立",
-      reception_time: "150")
+      reception_time: "1000")
   end

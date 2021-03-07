@@ -61,15 +61,13 @@ class ApplicationController < ActionController::Base
   def set_remainder
     @receptions = Reception.all
     @daily_receipts = DailyReceipt.all
-
       @receptions.each do |reception|
         @daily = @daily_receipts.where(d_receipt_namuber: reception.reception_namuber)
-
         @sum = reception.reception_time
         if @daily.present?
             @daily.each do |daily|
               if daily.d_receipt_time.present?
-                @sum1 = daily.d_receipt_time / 60.0
+                @sum1 = daily.d_receipt_time
                 @sum -= @sum1
                 @sum = BigDecimal(@sum.to_s).floor(2).to_f 
               end
@@ -117,18 +115,38 @@ def reception_validates
 
     if attendances_params[:working_time] == attendances_params[:designation_time]
       if d_receipt_params.present?
+
         d_receipt_params.each do |id, item|
           receipt = Receipt.find(id)
           unless receipt.receipt_time.present?
           redirect_to attendances_reception_request_user_url(current_user, data: @attendance) 
           flash[:danger] = "受付時間を入力してください"
         end
-        end
+
+        if  receipt.receipt_time.present?
+          @daily_receipt = DailyReceipt.where(attendance_id: @attendance.id)
+                                        .where(d_receipt_namuber: item[:d_receipt_namuber])
+          reception = Reception.find_by(reception_namuber: item[:d_receipt_namuber])
+          if @daily_receipt.present?
+            @daily_receipt.each do |daily|
+            @sum = reception.reception_remainder_time + daily.d_receipt_time 
+            end   
+          else
+            @sum = reception.reception_remainder_time
+          end
+       
+          unless @sum  >= receipt.receipt_time
+            redirect_to attendances_reception_request_user_url(current_user, data: @attendance) 
+            flash[:danger] = "[ 受付No.#{receipt.receipt_namuber} ] 受付規定時間を超えています。管理者に連絡をしてください"
+          end
+          end
       end
-       else
+    end
+    else
       redirect_to attendances_reception_request_user_url(current_user, data: @attendance)
       flash[:danger] = "勤務時間と勤務指定時間が等しくありません"
   end
+
 end
 end
   

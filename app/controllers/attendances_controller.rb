@@ -1,7 +1,7 @@
 class AttendancesController < ApplicationController
 
   before_action :set_user, only: [:reception_request, :reception_update, :reception_index, :reception_day]
-  before_action :set_one_month, only: [:reception_request, :reception_update, :reception_index, :reception_day]
+  before_action :set_one_month, only: [:reception_request, :reception_update, :reception_index, :reception_day  ]
   before_action :set_attendance, only: [:reception_request, :reception_update]
   before_action :set_performance, only: [:admin_reception_index]
   before_action :admin_user, only: [:admin_reception_request, :admin_reception_update,
@@ -35,11 +35,11 @@ class AttendancesController < ApplicationController
         @daily_receipt.save
         receipt = Receipt.find(id)
         @daily_receipt.update(d_receipt_time: receipt.receipt_time)
-        redirect_to attendances_reception_index_user_url(current_user)
+      end
+      redirect_to attendances_reception_index_user_url(current_user)
         flash[:success] = "日報を提出しました"
-      end
     end
-      end
+  end
 
   #日報編集ページ
   def reception_edit
