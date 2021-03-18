@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2021_02_14_204628) do
     t.string "classification"
     t.string "working_time"
     t.string "designation_time"
+    t.string "address"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

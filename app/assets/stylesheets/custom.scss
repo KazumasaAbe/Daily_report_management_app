@@ -25,7 +25,12 @@ textarea {
 
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1;
 }
 
@@ -37,9 +42,9 @@ h1 {
 }
 
 h2 {
-  font-size: 2.0em;
+  font-size: 2em;
   letter-spacing: -1px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: center;
   font-weight: normal;
   color: #777;
@@ -48,10 +53,10 @@ h2 {
 h3 {
   font-size: 1.5em;
   letter-spacing: -1px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   text-align: center;
   font-weight: normal;
-  color: #777
+  color: #777;
 }
 
 p {
@@ -83,7 +88,7 @@ p {
   float: left;
   width: 100%;
   margin-top: 45px;
-  -moz-box-sizing:  border-box;
+  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -103,37 +108,55 @@ p {
   }
 }
 
-.common-container{
-  background-image: image-url('Assembled.jpg');
+.common-container {
+  background-image: image-url("background1.jpg");
   background-size: 100% auto;
-  background-repeat:  no-repeat;
-  height: 700px;
+  background-repeat: repeat;
+  margin-top: -10px;
 }
 
-.common-content{
+.common-content {
   padding-top: 30px;
-  height: 700px;
   background-size: 100% auto;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .common-processing {
-  background-image: image-url('processing.jpg');
+  background-image: image-url("background1.jpg");
   background-size: 100% auto;
   background-repeat: repeat;
   height: 700px;
 }
 
 .common-electricity {
-  background-image: image-url('substrate.jpg');
+  background-image: image-url("background.jpg");
   background-size: 100% auto;
   background-repeat: repeat;
   height: 700px;
 }
 
 .common-assembly {
-  background-image: image-url('Assembled.jpg');
+  background-image: image-url("background.jpg");
   background-size: 100% auto;
   background-repeat: repeat;
   height: 700px;
+}
+
+.hoge {
+  width: 350px;
+  height: 300px;
+  margin-top: 10px;
+}
+
+.top-title {
+  font-size: 40px;
+  font-family: monospace;
+  color: rgb(22, 163, 163);
+}
+
+.top-content {
+  background-color: rgb(200, 240, 240);
+  border-radius: 10px;
+  margin-top: 10px;
+  padding-bottom: 10px;
 }

@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
  before_action :set_user, only: [:show, :edit, :update, :destroy]
- before_action :logged_in_user, only: [:show, :edit, :update, :index, :destroy, :information]
+ before_action :logged_in_user, only: [:show, :edit, :update, :index, :destroy, :information, :new]
  before_action :correct_user, only: [:edit, :update]
- before_action :admin_user, only: [:destroy, :create]
+ before_action :admin_user, only: [:destroy, :create, :new]
  before_action :not_admin_user, only: [:index]
 
 
@@ -30,11 +30,11 @@ class UsersController < ApplicationController
     @specialty_name =
     case current_user.specialty
     when "加工" 
-      'Processing Team'
+      '加工チーム'
     when "電気"
-      'Electricity Team'
+      '電気チーム'
     when "組立"
-      'Assembly Team'
+      '組立チーム'
     end
   end
 
@@ -71,7 +71,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:success] = "個人情報を更新しました。"
-      redirect_to @user
+      redirect_to attendances_reception_index_user_url(@user)
     else
       render :edit      
     end
@@ -80,7 +80,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     flash[:success] = "#{@user.name}のデータを削除しました。"
-    redirect_to users_url
+    redirect_to all_index_url
   end
 
 

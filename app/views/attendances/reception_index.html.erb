@@ -1,5 +1,6 @@
 <% provide(:title, "日報一覧") %>
 
+
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
     <h2>個人日報 実績カレンダー</h2>
@@ -8,7 +9,10 @@
     <%= date.day %>
     <% @attendances.each do |day| %>
 
-    <% if date == day.worked_on && day.classification.present? && (day.working_time == day.designation_time) %>
+    <% if (date == day.worked_on && day.classification == "通常" && (day.working_time == day.designation_time)) || 
+          (date == day.worked_on && day.classification == "出張" && (day.working_time == day.designation_time)) ||
+          (date == day.worked_on && day.classification == "特別勤務") %>
+
     <br>
     <%= link_to "確認", attendances_reception_day_user_path(@user, date: day.worked_on), class: "btn btn-sm btn-primary btn-reception", remote: true %>
     <% end %>
@@ -24,7 +28,6 @@
 
   </div>
 </div>
-
 
 
 <div id="reception_day" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

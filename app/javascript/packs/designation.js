@@ -3,9 +3,13 @@
 document.addEventListener("turbolinks:load", function() {
   $(function(){
 
-    var d = $('#user_attendances_over_time'); // 入力対象のinputタグID名
+    var d = $('#add6'); // 入力対象のinputタグID名
+   
 
     var e = $('#add10'); // 出力対象のinputタグID名
+
+
+    
 
 
     d.on('change', function() {
@@ -106,5 +110,6 @@ document.addEventListener("turbolinks:load", function() {
       
    
   };
+
   });
 });

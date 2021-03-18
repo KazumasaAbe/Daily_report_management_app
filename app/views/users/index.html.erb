@@ -1,53 +1,51 @@
 <% provide(:title, "チームメンバー一覧") %>
-<h1><%= @specialty_name %></h1>
 
+<h2>チームメンバー一覧</h2>
 
-<div class= "<%= @class_text%>">
-  <div class="common-content">
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-  <div class="position">【グループリーダー】</div>
- <table class="table table-bordered table-condensed table-hover" id="table-users">
-    <thead>
-      <tr>
-        <th>氏名コード</th>
-        <th>名前</th>
-        <th>所属</th>
-        <th>専門</th>
-        <th>チームリーダー</th>
-        <th>確認</th>
+    <div class="position">【グループリーダー】</div>
+    <table class="table table-bordered table-condensed table-hover" id="table-users">
+      <thead>
+        <tr>
+          <th>氏名コード</th>
+          <th>名前</th>
+          <th>所属</th>
+          <th>専門</th>
+          <th>チームリーダー</th>
+          <th>確認</th>
 
-      </tr>
+        </tr>
 
-    </thead>
+      </thead>
 
-    <tbody>
-      <% @users.each do |user| %>
-      <% if user.group_superior? %>
-      <tr>
-        <td><%= user.name_code %></td>
-        <td><%= user.name %></td>
-        <td><%= user.department %></td>
-        <td><%= user.specialty %></td>
-        <td>-</td>
-        <td><%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm ", remote: true %></td>
-      </tr>
-      <% end %>
-      <% end %>
-    </tbody>
+      <tbody>
+        <% @users.each do |user| %>
+        <% if user.group_superior? %>
+        <tr>
+          <td><%= user.name_code %></td>
+          <td><%= user.name %></td>
+          <td><%= user.department %></td>
+          <td><%= user.specialty %></td>
+          <td>-</td>
+          <td><%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm ", remote: true %></td>
+        </tr>
+        <% end %>
+        <% end %>
+      </tbody>
 
 
-  </table>
+    </table>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-  <div class="position">【チームリーダー】</div>
- <table class="table table-bordered table-condensed table-hover" id="table-users">
-    
-   
+    <div class="position">【チームリーダー】</div>
+    <table class="table table-bordered table-condensed table-hover" id="table-users">
+
+
       <% @users.each do |user| %>
       <% if user.team_superior? && (current_user.specialty == user.specialty) %>
       <tr>
@@ -60,44 +58,43 @@
       </tr>
       <% end %>
       <% end %>
-    </tbody>
+      </tbody>
 
-  </table>
+    </table>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-  <div class="position">【メンバー】</div>
- <table class="table table-bordered table-condensed table-hover" id="table-users">
-    
-    <tbody>
-      <% @users.each do |user| %>
-      <% if user.group_superior == false &&
+    <div class="position">【メンバー】</div>
+    <table class="table table-bordered table-condensed table-hover" id="table-users">
+
+      <tbody>
+        <% @users.each do |user| %>
+        <% if user.group_superior == false &&
             user.team_superior == false &&
             user.admin == false && (current_user.specialty == user.specialty) %>
-      <tr>
-        <td><%= user.name_code %></td>
-        <td><%= user.name %></td>
-        <td><%= user.department %></td>
-        <td><%= user.specialty %></td>
+        <tr>
+          <td><%= user.name_code %></td>
+          <td><%= user.name %></td>
+          <td><%= user.department %></td>
+          <td><%= user.specialty %></td>
 
           <% @users_t.each do |user_t| %>
-            <% if current_user.specialty == user_t.specialty %>
-              <td><%= user_t.name %></td>
-            <% end %>
+          <% if current_user.specialty == user_t.specialty %>
+          <td><%= user_t.name %></td>
           <% end %>
-          
-        <td><%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm", remote: true %></td>
-      </tr>
-      <% end %>
-      <% end %>
-   
+          <% end %>
 
-  </table>
+          <td><%= link_to "個人情報", user_information_path(user), class: "btn btn-info btn-sm", remote: true %></td>
+        </tr>
+        <% end %>
+        <% end %>
+
+
+    </table>
   </div>
 </div>
-</div>
-</div>
+
 
 <div id="information" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

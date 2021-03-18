@@ -45,6 +45,7 @@ Rails.application.routes.draw do
               get 'admin_reception_request'              #admin日報編集ページ
               patch 'admin_reception_update'             #admin日報更新
               get 'admin_reception_index'                #admin用受付一覧
+              get 'reset_receptions'                     #受付リセット
             end
           end
       end

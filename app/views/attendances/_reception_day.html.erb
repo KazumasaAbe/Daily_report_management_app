@@ -90,10 +90,28 @@
               </thead>
             </tbody>
           </table>
+          <div style="margin-top: 40px;"></div>
+          <table class="table table-bordered table-condensed table-hover" id="table-users">
+            <thead>
+            <tbody>
+              <% if @attendance.classification != "通常" %>
+              <tr>
+                <th>出張先</th>
+                <% if @attendance.address.present? %>
+                <td><%= @attendance.address %> </td>
+                <% else %>
+                <td>未登録</td>
+                <% end %>
+              </tr>
+              <% end %>
+
+              </thead>
+            </tbody>
+          </table>
 
           <div class="row">
             <div class="col-md-6">
-              <h2>その他</h2>
+              <h3>その他</h3>
 
 
 
@@ -101,23 +119,23 @@
                 <thead>
                 <tbody>
                   <tr>
-                    <th>4S</th>
-                    <td><%= @attendance.clean_time %> 分</td>
+                    <th>4Ss</th>
+                    <td><%= @attendance.clean_time %>　分</td>
                   </tr>
 
                   <tr>
                     <th>朝礼/昼礼</th>
-                    <td><%= @attendance.meeting_time %> 分</td>
+                    <td><%= @attendance.meeting_time %>　分</td>
                   </tr>
 
                   <tr>
                     <th>その他</th>
-                    <td><%= @attendance.other_time %> 分</td>
+                    <td><%= @attendance.other_time %>　分</td>
                   </tr>
 
                   <tr>
                     <th>残業時間</th>
-                    <td><%= @attendance.over_time %> 時間</td>
+                    <td><%= @attendance.over_time %>　時間</td>
                   </tr>
 
                   <tr>
@@ -127,7 +145,7 @@
 
                   <tr>
                     <th>勤務時間</th>
-                    <td><%= @attendance.working_time %> 分</td>
+                    <td><%= @attendance.working_time %>　分</td>
                   </tr>
 
                 </tbody>
@@ -137,6 +155,8 @@
 
             </div>
           </div>
+
+
           <% if current_user.admin? %>
           <div class="center">
             <td><%= link_to "日報編集", admin_reception_request_user_attendance_path(@user, @attendance, date: @attendance.worked_on), class: "btn btn-info" %></td>

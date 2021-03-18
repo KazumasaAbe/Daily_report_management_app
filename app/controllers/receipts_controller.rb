@@ -10,6 +10,18 @@ class ReceiptsController < ApplicationController
     @user = User.find_by(id: @attendance.user_id)
     
     check_params.each do |id, item|
+      @reception = Reception.find(id)
+      @receptions = @reception.update(item)
+    end
+
+    checks = Reception.where(check: "1")
+    if checks.count >= 6
+      flash[:danger] = "5種類以上の日報は選択できません"
+      redirect_to receptions_url
+    end
+
+
+    check_params.each do |id, item|
       #idから受付を抽出 + チェック、チェックIDの初期化
       @reception = Reception.find(id)
       @reception = @reception.update(check: "0", check_id: nil)
@@ -40,13 +52,16 @@ class ReceiptsController < ApplicationController
             @receipt.save
           end
     end
-    flash[:success] = "選択した日報を反映しました"
+   
+    if checks.count <= 5
     if current_user.admin?
       redirect_to admin_reception_request_user_attendance_url(@user, @attendance)
-
+      flash[:success] = "選択した日報を反映しました"
     else
       redirect_to attendances_reception_request_user_url(current_user)
+      flash[:success] = "選択した日報を反映しました"
     end
+  end
   end
 
   private

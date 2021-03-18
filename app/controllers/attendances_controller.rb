@@ -9,11 +9,13 @@ class AttendancesController < ApplicationController
   before_action :admin_or_correct_user, only: [:reception_index, :reception_request, :reception_update]
   before_action :not_admin_user, only: [:reception_index]
   before_action :reception_validates, only: [:reception_update]
+  before_action :business_trip_validates, only: [:reception_update]
   
 
   #日報提出ページ
   def reception_request
     @receipts = Receipt.where(attendance_id: @attendance.id)
+    @receptions = Reception.all
   end
 
   #日報提出更新
@@ -36,9 +38,9 @@ class AttendancesController < ApplicationController
         receipt = Receipt.find(id)
         @daily_receipt.update(d_receipt_time: receipt.receipt_time)
       end
+    end
       redirect_to attendances_reception_index_user_url(current_user)
         flash[:success] = "日報を提出しました"
-    end
   end
 
   #日報編集ページ
@@ -156,6 +158,28 @@ class AttendancesController < ApplicationController
   end
 
 
+  def reset_receptions
+    @attendance = Attendance.find(params[:id])
+    @user = User.find_by(id: @attendance.user_id)
+    @receptions = Reception.all
+
+    @receptions.each do |reception|
+      reception.update(check: 0, check_id: nil)
+    end
+
+    @receipts = Receipt.where(attendance_id: @attendance.id)
+    if @receipts.present?
+      @receipts.each do |receipt|
+        receipt.destroy
+      end
+    end
+
+    redirect_to attendances_reception_request_user_url(current_user)
+
+
+  end
+
+
 
 
   private
@@ -167,7 +191,8 @@ class AttendancesController < ApplicationController
                                                :over_time,
                                                :classification,
                                                :working_time,
-                                               :designation_time])[:attendances]
+                                               :designation_time,
+                                               :address])[:attendances]
   end
 
   def d_receipt_params

@@ -39,7 +39,8 @@ class ReceptionsController < ApplicationController
         flash[:success] = '新規作成に成功しました。'
         redirect_to receptions_url
       else
-        render :new
+        flash[:danger] = '新規作成に失敗しました。'
+        redirect_to receptions_url
       end
   end
 

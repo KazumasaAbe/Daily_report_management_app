@@ -1,5 +1,5 @@
 <% provide(:title, "all_reception") %>
-<h1>受付日報一覧</h1>
+<h2>受付日報一覧</h2>
 
 <%= form_with(model: @user, url: receipts_receipts_update_user_attendance_path(@user, @attendance), 
               local: true, method: :patch) do |f| %>
@@ -26,8 +26,8 @@
         <tr>
           <th>受付No</th>
           <th>受付名</th>
-          <th>規定工数 [h]</th>
-          <th>使用可能工数 [h]</th>
+          <th>規定工数 [min]</th>
+          <th>使用可能工数 [min]</th>
           <th>実績工数 [min]</th>
           <% unless current_user.admin? %>
           <th>反映</th>

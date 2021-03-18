@@ -1,15 +1,15 @@
 <% provide(:title, "日報提出") %>
 <% provide(:class_text, "signup") %>
+
 <h2>日報提出</h2>
 <h2><%= l(@attendance.worked_on) %></h2>
 
 <%= form_with(model: @user, url: attendances_reception_update_user_path(@user, data: @attendance), method: :patch ) do |f| %>
 <%= f.fields_for :attendances, @attendance do |a| %>
 
-
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-    <div class="pull-right"><%= link_to "リセット", '#', class: "btn btn-sm" %></div>
+    <div class="pull-right"><%= link_to "リセット", reset_receptions_user_attendance_path(@user, @attendance), class: "btn btn-sm" %></div>
     <div class="pull-right"><%= link_to "受付取得", receptions_path, class: "btn btn-info btn-sm" %></div>
     <div style="margin-bottom: 40px;"></div>
 
@@ -123,12 +123,12 @@
               <th>残業時間</th>
               <td><%= a.select :over_time, ['','0','0.25', '0.5', '0.75', '1.0',
                                         '1.25', '1.5', '1.75', '2.0',
-                                        '2.25', '2.5', '2.75', '3.0' ], {}, class: "form-control" %></td>
+                                        '2.25', '2.5', '2.75', '3.0' ], {}, id: "add6", class: "form-control" %></td>
             </tr>
 
             <tr>
               <th>出勤区分</th>
-              <td><%= a.select :classification, ['通常','有給', '午前休', '午後休'], {}, class: "form-control" %></td>
+              <td><%= a.select :classification, ['通常', '出張', '特別勤務'], {}, id: "add7", class: "form-control" %></td>
             </tr>
 
             <tr>
@@ -148,6 +148,78 @@
 
 
         </table>
+
+
+      </div>
+
+
+
+      <div class="col-md-6" id="column1">
+        <h3>Google-Map</h3>
+
+
+
+        <div id='map'></div>
+
+        <style>
+          #map {
+            height: 400px;
+            width: 100%;
+          }
+        </style>
+
+        <script>
+          let map
+
+          function initMap() {
+            geocoder = new google.maps.Geocoder()
+
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: {
+                lat: 40.7828,
+                lng: -73.9653
+              },
+              zoom: 12,
+            });
+
+            marker = new google.maps.Marker({
+              position: {
+                lat: 40.7828,
+                lng: -73.9653
+              },
+              map: map
+            });
+          }
+          // ここから追加 
+          let geocoder
+
+          function codeAddress() {
+            let inputAddress = document.getElementById('address').value;
+
+            geocoder.geocode({
+              'address': inputAddress
+            }, function(results, status) {
+              if (status == 'OK') {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                  map: map,
+                  position: results[0].geometry.location
+                });
+              } else {
+                alert('該当する結果がありませんでした：' + status);
+              }
+            });
+          }
+          // ここまで追加 
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl0E5bZ1VTtLlaJlHP1msZZuAAjb_8zj4&callback=initMap" async defer></script>
+        <!-- ここから追加 -->
+
+        <%= a.text_field :address, id: "address",placeholder: '出張先住所を入力してください', class: "form-control" %>
+        <div class="google-map-search">
+          <input type="button" value="Encode" onclick="codeAddress()">
+        </div>
+        <!-- ここまで追加-->
       </div>
     </div>
 

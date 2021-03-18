@@ -20,7 +20,8 @@ User.create!(name: "船原　忠良",
              specialty: "加工",
              department: "試作部",
              password: "password",
-             password_confirmation: "password")
+             password_confirmation: "password",
+             admin: true)
 
 #チームリーダー(加工)
 User.create!(name: "亀井　恵多",

@@ -12,6 +12,7 @@ class CreateAttendances < ActiveRecord::Migration[6.1]
       t.string "classification"                 #勤怠種別
       t.string "working_time"                 #勤務時間
       t.string "designation_time"             #指定勤務時間
+      t.string "address"                      #出張先住所
       t.references :user, null: false, foreign_key: true
 
       t.timestamps

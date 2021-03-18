@@ -113,7 +113,7 @@ def reception_validates
       end
     end
 
-    if attendances_params[:working_time] == attendances_params[:designation_time]
+    if attendances_params[:working_time] == attendances_params[:designation_time] || @attendance.classification == "特別勤務"
       if d_receipt_params.present?
 
         d_receipt_params.each do |id, item|
@@ -146,9 +146,16 @@ def reception_validates
       redirect_to attendances_reception_request_user_url(current_user, data: @attendance)
       flash[:danger] = "勤務時間と勤務指定時間が等しくありません"
   end
+end
+end
 
+def business_trip_validates
+  if @attendance.classification == "出張"
+    unless @attendance.address.present?
+      redirect_to attendances_reception_request_user_url(current_user, data: @attendance)
+      flash[:danger] = "出張先住所を入力してください"
+    end
+  end
 end
-end
-  
 
 end
