@@ -153,7 +153,7 @@
       </div>
 
 
-      <!--
+
       <div class="col-md-6" id="column1">
         <h3>Google-Map</h3>
 
@@ -213,25 +213,24 @@
           // ここまで追加 
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl0E5bZ1VTtLlaJlHP1msZZuAAjb_8zj4&callback=initMap" async defer></script>
-       
 
-      <%= a.text_field :address, id: "address",placeholder: '出張先住所を入力してください', class: "form-control" %>
-      <div class="google-map-search">
-        <input type="button" value="Encode" onclick="codeAddress()">
+
+        <%= a.text_field :address, id: "address",placeholder: '出張先住所を入力してください', class: "form-control" %>
+        <div class="google-map-search">
+          <input type="button" value="Encode" onclick="codeAddress()">
+        </div>
+
       </div>
-      
     </div>
+
+
+
+
+    <%= f.submit "提出", class: "btn btn-primary btn-block" %>
+
+
   </div>
--->
+</div>
+<% end %>
 
-
-
-
-      <%= f.submit "提出", class: "btn btn-primary btn-block" %>
-
-
-    </div>
-  </div>
-  <% end %>
-
-  <% end %>
+<% end %>
