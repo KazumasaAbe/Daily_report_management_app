@@ -3,13 +3,14 @@ class AttendancesController < ApplicationController
   before_action :set_user, only: [:reception_request, :reception_update, :reception_index, :reception_day]
   before_action :set_one_month, only: [:reception_request, :reception_update, :reception_index, :reception_day  ]
   before_action :set_attendance, only: [:reception_request, :reception_update]
+  before_action :set_member_attendance, only: [:admin_reception_update]
   before_action :set_performance, only: [:admin_reception_index]
   before_action :admin_user, only: [:admin_reception_request, :admin_reception_update,
                                     :admin_reception_index, :receipts_list, :receipts_day_list]
   before_action :admin_or_correct_user, only: [:reception_index, :reception_request, :reception_update]
   before_action :not_admin_user, only: [:reception_index]
-  before_action :reception_validates, only: [:reception_update]
-  before_action :business_trip_validates, only: [:reception_update]
+  before_action :reception_validates, only: [:reception_update, :admin_reception_update]
+  before_action :business_trip_validates, only: [:reception_update, :admin_reception_update]
   
 
   #日報提出ページ
@@ -98,25 +99,12 @@ class AttendancesController < ApplicationController
 
    #日報提出更新
    def admin_reception_update
-   #送られた日付データとidから該当のattendanceを抽出
-   @attendance = Attendance.find_by(id: params[:id])
-   #attendanceからuserを抽出
-   @user = User.find_by(id: @attendance.user_id)
     #DailyReceiptから当日のattendanceIDで抽出
     @daily_receipts = DailyReceipt.where(attendance_id: @attendance.id)
     #当日日報がある場合は、削除
     if @daily_receipts.present?
       @daily_receipts.each do |d|
         d.destroy
-      end
-    end
-    
-    #受付時間が送られて来ている場合
-    if receipts_params.present?
-      receipts_params.each do |idd, time|
-        #receiptモデルから受付IDで抽出＋更新
-        receipt = Receipt.find(idd)
-        receipt.update(time)
       end
     end
 
@@ -128,19 +116,11 @@ class AttendancesController < ApplicationController
         @daily_receipt.save
         receipt = Receipt.find(id)
         @daily_receipt.update(d_receipt_time: receipt.receipt_time)
-        
       end
     end
-
-    #その他のデータを更新
-      if @attendance.update(attendances_params)
-        flash[:success] = "日報を更新しました。"
-      else
-        flash[:danger] ="日報登録に失敗しました"
-        render :users_url 
-      end
     redirect_to attendances_receipts_day_list_user_url(current_user, date: @attendance.worked_on )
-  end
+    flash[:success] = "日報を更新しました"
+end
 
   def admin_reception_index
     #送られた日付データとidから該当のattendanceを抽出
@@ -174,7 +154,11 @@ class AttendancesController < ApplicationController
       end
     end
 
+    if current_user.admin?
+      redirect_to admin_reception_request_user_attendance_path(@user, @attendance)
+    else
     redirect_to attendances_reception_request_user_url(current_user)
+    end
 
 
   end

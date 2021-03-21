@@ -2,9 +2,6 @@ class CreateAttendances < ActiveRecord::Migration[6.1]
   def change
     create_table :attendances do |t|
       t.date :worked_on                         #日付
-      t.string "A_reception_remainder_time"     #残時間
-      t.string "A_reception_Performance_time"   #実績時間
-
       t.string "clean_time"                     #4S時間
       t.string "meeting_time"                 #朝礼・昼礼時間
       t.string "other_time"                     #その他時間

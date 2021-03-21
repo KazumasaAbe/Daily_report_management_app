@@ -91,6 +91,26 @@
             </tbody>
           </table>
 
+          <div style="margin-top: 40px;"></div>
+          <table class="table table-bordered table-condensed table-hover" id="table-users">
+            <thead>
+            <tbody>
+              <% if @attendance.classification != "通常" %>
+              <tr>
+                <th>出張先</th>
+                <% if @attendance.address.present? %>
+                <td><%= @attendance.address %> </td>
+                <% else %>
+                <td>未登録</td>
+                <% end %>
+              </tr>
+              <% end %>
+
+              </thead>
+            </tbody>
+          </table>
+
+
           <div class="row">
             <div class="col-md-6">
               <h2>その他</h2>

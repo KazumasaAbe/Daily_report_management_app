@@ -119,8 +119,15 @@ def reception_validates
         d_receipt_params.each do |id, item|
           receipt = Receipt.find(id)
           unless receipt.receipt_time.present?
+            if current_user.admin?
+              redirect_to admin_reception_request_user_attendance_url(@user, data: @attendance) 
+              flash[:danger] = "受付時間を入力してください"
+              break
+            else
           redirect_to attendances_reception_request_user_url(current_user, data: @attendance) 
           flash[:danger] = "受付時間を入力してください"
+          break
+            end
         end
 
         if  receipt.receipt_time.present?
@@ -136,15 +143,25 @@ def reception_validates
           end
        
           unless @sum  >= receipt.receipt_time
+            if current_user.admin?
+              redirect_to admin_reception_request_user_attendance_url(@user, data: @attendance) 
+            flash[:danger] = "[ 受付No.#{receipt.receipt_namuber} ] 受付規定時間を超えています。"
+            else
             redirect_to attendances_reception_request_user_url(current_user, data: @attendance) 
             flash[:danger] = "[ 受付No.#{receipt.receipt_namuber} ] 受付規定時間を超えています。管理者に連絡をしてください"
+            end
           end
           end
       end
     end
     else
+      if current_user.admin?
+        redirect_to admin_reception_request_user_attendance_url(@user, data: @attendance)
+        flash[:danger] = "勤務時間と勤務指定時間が等しくありません"
+      else
       redirect_to attendances_reception_request_user_url(current_user, data: @attendance)
       flash[:danger] = "勤務時間と勤務指定時間が等しくありません"
+      end
   end
 end
 end
@@ -152,10 +169,22 @@ end
 def business_trip_validates
   if @attendance.classification == "出張"
     unless @attendance.address.present?
+      if current_user.admin?
+        redirect_to admin_reception_request_user_attendance_url(@user, data: @attendance)
+        flash[:danger] = "出張先住所を入力してください"
+      else
       redirect_to attendances_reception_request_user_url(current_user, data: @attendance)
       flash[:danger] = "出張先住所を入力してください"
+      end
     end
   end
+end
+
+def set_member_attendance
+   #送られた日付データとidから該当のattendanceを抽出
+   @attendance = Attendance.find_by(id: params[:id])
+   #attendanceからuserを抽出
+   @user = User.find_by(id: @attendance.user_id)
 end
 
 end

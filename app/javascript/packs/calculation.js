@@ -6,6 +6,7 @@ document.addEventListener("turbolinks:load", function() {
     var a = $('#add2'); // 入力対象のinputタグID名
     var b = $('#add3'); // 入力対象のinputタグID名
     var c = $('#add4'); // 入力対象のinputタグID名
+    var f200 = $('#add200'); // 入力対象のinputタグID名
 
     var c0 = $('#count'); // 入力対象のinputタグID名
     var tagOutput = $('#add5'); // 出力対象のinputタグID名
@@ -39,7 +40,8 @@ document.addEventListener("turbolinks:load", function() {
       break;
     };
 
-
+    
+    
 
     switch (cc0) {
       case "1":

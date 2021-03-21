@@ -6,6 +6,7 @@ document.addEventListener("turbolinks:load", function() {
     var f = $('#add7'); // 入力対象のinputタグID名
 
 
+
     f.on('change', function() {
       var ff = $(this).val();
 
@@ -27,15 +28,14 @@ document.addEventListener("turbolinks:load", function() {
 
       switch (ff) {
         case "通常":
-          var answer = false;
+           answer = false;
           break;
         case "出張":
-          var answer = true;
+           answer = true;
           break;
       }
 
-        g.val(total);
-      
+      answer;
    
   };
   });

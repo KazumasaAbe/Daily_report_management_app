@@ -14,8 +14,6 @@ ActiveRecord::Schema.define(version: 2021_02_14_204628) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
-    t.string "A_reception_remainder_time"
-    t.string "A_reception_Performance_time"
     t.string "clean_time"
     t.string "meeting_time"
     t.string "other_time"

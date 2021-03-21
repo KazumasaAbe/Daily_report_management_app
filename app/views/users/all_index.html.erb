@@ -40,7 +40,9 @@
 
           <% if current_user.admin? %>
           <td></td>
-          <td><%= link_to "削除", user_path(user), method: :delete, class: "btn btn-danger btn-sm" %></td>
+          <td><%= link_to "削除", user_path(user), method: :delete,
+                                  data: { confirm: "削除してよろしいですか？" },
+                                  class: "btn btn-danger btn-sm" %></td>
           <% end %>
 
         </tr>
@@ -77,7 +79,9 @@
 
           <% if current_user.admin? %>
           <td><%= link_to "日報編集", attendances_reception_index_user_path(user), class: "btn btn-primary btn-sm" %></td>
-          <td><%= link_to "削除", user_path(user), method: :delete, class: "btn btn-danger btn-sm" %></td>
+          <td><%= link_to "削除", user_path(user), method: :delete,
+                                     data: { confirm: "削除してよろしいですか？" },
+                                     class: "btn btn-danger btn-sm" %></td>
           <% end %>
 
         </tr>
@@ -123,7 +127,9 @@
 
           <% if current_user.admin? %>
           <td><%= link_to "日報編集", attendances_reception_index_user_path(user), class: "btn btn-primary btn-sm" %></td>
-          <td><%= link_to "削除", user_path(user), method: :delete, class: "btn btn-danger btn-sm" %></td>
+          <td><%= link_to "削除", user_path(user), method: :delete, 
+                                    data: { confirm: "削除してよろしいですか？" },
+                                    class: "btn btn-danger btn-sm" %></td>
           <% end %>
 
         </tr>
