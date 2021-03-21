@@ -1,7 +1,7 @@
 
 #管理者
 User.create!(name: "管理者",
-             email: "sample@email.com",
+             email: "admin@email.com",
              name_code: 1000,
              position: "管理者",
              department: "管理部",
