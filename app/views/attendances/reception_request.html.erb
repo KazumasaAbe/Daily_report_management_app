@@ -215,9 +215,8 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl0E5bZ1VTtLlaJlHP1msZZuAAjb_8zj4&callback=initMap" async defer></script>
 
 
-        <input id="address" type="textbox" value="GeekSalon">
-        <input type="button" value="Encode" onclick="codeAddress()">
         <div class="google-map-search">
+          <%= a.text_field :designation_time, id: "add10",readonly: true, class: "form-control" %>
           <input type="button" value="Encode" onclick="codeAddress()">
         </div>
 
