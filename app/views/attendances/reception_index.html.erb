@@ -9,9 +9,13 @@
     <%= date.day %>
     <% @attendances.each do |day| %>
 
+    <% if (date == day.worked_on && day.classification == "通常" && (day.working_time == day.designation_time)) || 
+          (date == day.worked_on && day.classification == "出張" && (day.working_time == day.designation_time)) ||
+          (date == day.worked_on && day.classification == "特別勤務") %>
 
     <br>
     <%= link_to "確認", attendances_reception_day_user_path(@user, date: day.worked_on), class: "btn btn-sm btn-primary btn-reception", remote: true %>
+    <% end %>
 
     <% if date == day.worked_on && day.classification.nil? && current_user.admin? %>
     <br>

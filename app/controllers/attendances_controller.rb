@@ -59,7 +59,8 @@ class AttendancesController < ApplicationController
   #日報詳細
   def reception_day
     @attendance = @attendances.find_by(params[:date])
-    @daily_receipts = DailyReceipt.where(attendance_id: @attendance.id)
+    #@daily_receipts = DailyReceipt.where(attendance_id: @attendance.id)
+    @daily_receipts = DailyReceipt.all
   end
 
   
