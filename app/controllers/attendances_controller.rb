@@ -170,8 +170,10 @@ end
 
     if current_user.admin?
       redirect_to admin_reception_request_user_attendance_path(@user, @attendance)
+      flash[:success] = "受付情報をリセットしました"
     else
-    redirect_to attendances_reception_request_user_url(current_user)
+      redirect_to attendances_reception_request_user_url(current_user)
+      flash[:success] = "受付情報をリセットしました"
     end
 
 
