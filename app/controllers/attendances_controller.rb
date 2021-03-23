@@ -75,6 +75,20 @@ class AttendancesController < ApplicationController
     @users = User.all
   end
 
+  def receipts_destroy
+    @attendances = Attendance.where(worked_on: params[:date])
+    @user = User.find_by(id: params[:id])
+    @attendance = @attendances.find_by(user_id: @user.id)
+    @daily_receipts = DailyReceipt.where(attendance_id: @attendance.id)
+
+    @attendance.destroy
+    @daily_receipts.each do |d|
+      d.destroy
+    end
+    redirect_to attendances_receipts_day_list_user_url(current_user, date: params[:date])
+    flash[:success] = "#{@user.name}の日報を削除しました"
+  end
+
   #日報詳細(個人)
   def receipts_day
     @attendances = Attendance.where(worked_on: params[:date])

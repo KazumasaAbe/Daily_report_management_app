@@ -33,6 +33,7 @@ Rails.application.routes.draw do
           get 'attendances/reception_day'                #日報詳細モーダル(個人)
 
           get 'attendances/receipts_list'                #日報一覧
+          delete 'attendances/receipts_destroy'          #各日報削除
           get 'attendances/receipts_day_list'            #日報日毎データ
           get 'attendances/receipts_day'                 #日報詳細モーダル(管理者)
 
