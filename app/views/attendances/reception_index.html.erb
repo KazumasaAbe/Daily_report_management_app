@@ -15,11 +15,13 @@
 
     <br>
     <%= link_to "確認", attendances_reception_day_user_path(@user, date: day.worked_on), class: "btn btn-sm btn-primary btn-reception", remote: true %>
+    <% break %>
     <% end %>
 
     <% if date == day.worked_on && day.classification.nil? && current_user.admin? %>
     <br>
     <%= link_to "新規", admin_reception_request_user_attendance_path(@user, day, date: day.worked_on), class: "btn btn-sm btn-info btn-reception" %>
+    <% break %>
     <% end %>
 
 
